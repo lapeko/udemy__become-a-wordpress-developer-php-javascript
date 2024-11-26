@@ -1,0 +1,9 @@
+services:
+  php:
+    image: php:latest
+    container_name: php-test
+    ports:
+      - 8080:80
+    volumes:
+      - ./html:/var/www/html
+    command: php -S 0.0.0.0:80 -t /var/www/html
