@@ -2,6 +2,11 @@
     get_header();
 	while (have_posts()) {
 		the_post();
+		$parent_id = wp_get_post_parent_id(get_the_ID());
+        $child_pages = get_pages(array(
+            'parent' => get_the_ID(),
+            'sort_column' => 'menu_order')
+        );
 ?>
         <div class="page-banner">
             <div class="page-banner__bg-image" style="background-image: url(<?php echo get_theme_file_uri('images/ocean.jpg') ?>)"></div>
@@ -14,10 +19,7 @@
         </div>
 
         <div class="container container--narrow page-section">
-            <?php
-                $parent_id = wp_get_post_parent_id(get_the_ID());
-                if ($parent_id) {
-            ?>
+           <?php if ($parent_id) { ?>
                 <div class="metabox metabox--position-up metabox--with-home-link">
                     <p>
                         <a
@@ -32,13 +34,24 @@
                 </div>
             <?php } ?>
 
-<!--            <div class="page-links">-->
-<!--                <h2 class="page-links__title"><a href="#">About Us</a></h2>-->
-<!--                <ul class="min-list">-->
-<!--                    <li class="current_page_item"><a href="#">Our History</a></li>-->
-<!--                    <li><a href="#">Our Goals</a></li>-->
-<!--                </ul>-->
-<!--            </div>-->
+            <?php
+                if ($parent_id or count($child_pages)) {
+                    $title = $parent_id ? get_the_title($parent_id) : get_the_title();
+                    $id = $parent_id ?: get_the_ID();
+            ?>
+                <div class="page-links">
+                    <h2 class="page-links__title"><a href="#"><?php echo $title ?></a></h2>
+                    <ul class="min-list">
+                        <?php
+                            echo wp_list_pages(array(
+                                'title_li' => NULL,
+                                'parent' => $id,
+                                'sort_column' => 'menu_order')
+                            )
+                        ?>
+                    </ul>
+                </div>
+            <?php } ?>
 
             <div class="generic-content">
                 <?php the_content(); ?>
