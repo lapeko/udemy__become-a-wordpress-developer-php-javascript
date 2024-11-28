@@ -1,8 +1,8 @@
 <?php
     get_header();
-	while (have_posts()) {
-		the_post();
-		$parent_id = wp_get_post_parent_id(get_the_ID());
+    while (have_posts()) {
+        the_post();
+        $parent_id = wp_get_post_parent_id(get_the_ID());
         $child_pages = get_pages(array(
             'parent' => get_the_ID(),
             'sort_column' => 'menu_order')
@@ -22,10 +22,7 @@
            <?php if ($parent_id) { ?>
                 <div class="metabox metabox--position-up metabox--with-home-link">
                     <p>
-                        <a
-                            class="metabox__blog-home-link"
-                            href="<?php echo get_permalink($parent_id); ?>"
-                        >
+                        <a class="metabox__blog-home-link" href="<?php echo get_permalink($parent_id); ?>">
                             <i class="fa fa-home" aria-hidden="true"></i>
                             <?php echo get_the_title($parent_id); ?>
                         </a>
