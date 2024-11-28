@@ -9,8 +9,12 @@
 
 	function fictional_university_theme_features() {
 		add_theme_support( 'title-tag' );
+		register_nav_menus( array(
+			'mainHeaderNavMenu' => 'Main Navigation Menu',
+			'footerNavMenuOne' => 'Footer Navigation Menu One',
+			'footerNavMenuTwo' => 'Footer Navigation Menu Two',
+		));
 	}
 
 	add_action('wp_enqueue_scripts', 'load_fictional_university_theme_files');
 	add_action("after_setup_theme", 'fictional_university_theme_features');
-?>
