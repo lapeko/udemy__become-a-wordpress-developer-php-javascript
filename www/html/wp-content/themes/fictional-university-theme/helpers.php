@@ -9,11 +9,7 @@
 		if ($parent_id && get_post_field('post_name', $parent_id) === $slug)
 			return true;
 
-		$blog_page_id = get_option('page_for_posts');
-		if (is_home() && $blog_page_id && get_post_field('post_name', $blog_page_id) === $slug)
-			return true;
-
-		return is_post_type_archive($slug);
+		return get_post_type() === $slug;
 	}
 
 
