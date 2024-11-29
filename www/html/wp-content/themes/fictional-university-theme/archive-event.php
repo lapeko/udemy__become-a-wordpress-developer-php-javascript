@@ -9,12 +9,13 @@
 	</div>
 
 	<div class="container container--narrow page-section">
-		<?php while(have_posts()) {
-			the_post();
+		<?php
+            while(have_posts()) {
+            the_post();
         ?>
             <div class="event-summary">
                 <a class="event-summary__date event-summary__date--beige t-center" href="<?php the_permalink(); ?>">
-	                <?php $eventDate = new DateTime(get_field('event_date')) ?>
+                    <?php $eventDate = new DateTime(get_field('event_date')) ?>
                     <span class="event-summary__month"><?php echo $eventDate->format('M'); ?></span>
                     <span class="event-summary__day"><?php echo $eventDate->format('d'); ?></span>
                 </a>
@@ -27,6 +28,8 @@
 		    }
             echo paginate_links();
         ?>
-	</div>
 
+        <hr class="section-break" />
+        <p>Looking for a recap of past events? <a href="<?php echo site_url('/past-events') ?>">Check out our past events archive.</p>
+	</div>
 <?php get_footer(); ?>

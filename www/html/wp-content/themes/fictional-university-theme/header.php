@@ -16,11 +16,11 @@
         <div class="site-header__menu group">
             <nav class="main-navigation">
                 <ul>
-                    <li <?php applyCurrentMenuItemClass('about-us') ?> ><a href="<?php echo site_url('/about-us') ?>">About Us</a></li>
-                    <li <?php applyCurrentMenuItemClass('Programs') ?>><a href="#">Programs</a></li>
-                    <li <?php applyCurrentMenuItemClass('event') ?>><a href="<?php echo get_post_type_archive_link("event") ?>">Events</a></li>
-                    <li <?php applyCurrentMenuItemClass('Campuses') ?>><a href="#">Campuses</a></li>
-                    <li <?php applyCurrentMenuItemClass('post') ?>><a href="<?php echo site_url('/blog') ?>">Blog</a></li>
+                    <li <?php if (is_page('about-us')) echo 'class="current-menu-item"'; ?>><a href="<?php echo site_url('/about-us') ?>">About Us</a></li>
+                    <li><a href="#">Programs</a></li>
+                    <li <?php if (is_post_type_archive('event') || is_page('past-events')) echo 'class="current-menu-item"'; ?>><a href="<?php echo get_post_type_archive_link("event") ?>">Events</a></li>
+                    <li><a href="#">Campuses</a></li>
+                    <li <?php if (is_home()) echo 'class="current-menu-item"'; ?>><a href="<?php echo site_url('/blog') ?>">Blog</a></li>
                 </ul>
 <!--                --><?php //wp_nav_menu(array('theme_location' => 'mainHeaderNavMenu')) ?>
             </nav>
