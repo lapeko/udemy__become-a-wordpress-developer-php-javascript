@@ -10,7 +10,7 @@ services:
       WORDPRESS_DB_PASSWORD: admin
       WORDPRESS_DB_NAME: wp_db
     volumes:
-      - ./www/html:/var/www/html
+      - ./www/html:/var/www/html:rw
 
   db:
     image: mysql:5.7

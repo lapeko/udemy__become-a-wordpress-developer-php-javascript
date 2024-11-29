@@ -6,7 +6,7 @@
 			'has_archive' => true,
 			'menu_icon' => 'dashicons-calendar',
 			'show_in_rest' => true,
-			'supports' => array( 'title', 'editor', 'excerpt' ),
+			'supports' => array('title', 'editor', 'excerpt'),
 			'labels' => array(
 				'name' => 'Events',
 				'add_new_item' => 'Add New Event',
