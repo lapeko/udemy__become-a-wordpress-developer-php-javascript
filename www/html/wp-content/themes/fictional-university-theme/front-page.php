@@ -15,9 +15,21 @@
 			<div class="full-width-split__inner">
 				<h2 class="headline headline--small-plus t-center">Upcoming Events</h2>
                 <?php
+                  $today = date('Ymd');
                   $lastTwoEvents = new WP_Query( array(
-                    'post_type' => 'event',
                     'posts_per_page' => 2,
+                    'post_type' => 'event',
+                    'meta_key' => 'event_date',
+                    'orderby' => 'meta_value_num',
+                    'order' => 'ASC',
+                    'meta_query' => array(
+                        array(
+                            'key' => 'event_date',
+                            'compare' => '>=',
+                            'value' => $today,
+                            'type' => 'numeric',
+                        )
+                    )
                   ));
                   while ( $lastTwoEvents->have_posts() ) : $lastTwoEvents->the_post();
                 ?>
