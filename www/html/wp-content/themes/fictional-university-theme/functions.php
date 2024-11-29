@@ -17,5 +17,24 @@
 		));
 	}
 
+	function intercept_post_requests($query) {
+		if (is_admin() || !$query->is_main_query() || !is_post_type_archive('event'))
+			return;
+
+		$today = date('Ymd');
+		$query->set('meta_key', 'event_date');
+		$query->set('orderby', 'meta_value_num');
+		$query->set('order', 'ASC');
+		$query->set('meta_query', array(
+			array(
+				'key' => 'event_date',
+				'compare' => '>=',
+				'value' => $today,
+				'type' => 'numeric',
+			)
+		));
+	}
+
 	add_action('wp_enqueue_scripts', 'load_site_theme_files');
 	add_action("after_setup_theme", 'site_theme_features');
+	add_action('pre_get_posts', 'intercept_post_requests');
