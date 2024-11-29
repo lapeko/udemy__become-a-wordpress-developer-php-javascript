@@ -1,7 +1,6 @@
 <?php
     get_header();
-    while (have_posts()) {
-	    the_post();
+    while (have_posts()): the_post();
 ?>
         <div class="page-banner">
             <div class="page-banner__bg-image" style="background-image: url(<?php echo get_theme_file_uri('images/ocean.jpg') ?>)"></div>
@@ -27,8 +26,25 @@
             <div class="generic-content">
                 <?php the_content(); ?>
             </div>
+
+            <?php
+                $relPrograms = get_field('related_programs');
+                if (count($relPrograms) > 0) {
+            ?>
+                <hr class="section-break">
+                <h2>Related Program(s)</h2>
+
+                <ul class="link-list min-list">
+                    <?php
+
+                        foreach ($relPrograms as $relProgram) {
+                    ?>
+                        <li><a href="<?php echo get_the_permalink($relProgram) ?>"><?php print_r(get_the_title($relProgram)); ?></a></li>
+                    <?php } ?>
+                </ul>
+            <?php } ?>
         </div>
 <?php
-    }
+    endwhile;
     get_footer();
 ?>
