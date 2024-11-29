@@ -46,6 +46,10 @@
                     )
                 )
             ));
+            if (count($relatedEvents->posts)) {
+              echo '<hr class="section-break">';
+              echo '<h2 class="headline headline--medium">Upcoming ' . get_the_title() . ' Events</h2>';
+            };
             while ( $relatedEvents->have_posts() ) : $relatedEvents->the_post();
         ?>
             <div class="event-summary">

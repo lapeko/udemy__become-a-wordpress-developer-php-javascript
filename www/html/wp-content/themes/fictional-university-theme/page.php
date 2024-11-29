@@ -37,7 +37,7 @@
                     $id = $parent_id ?: get_the_ID();
             ?>
                 <div class="page-links">
-                    <h2 class="page-links__title"><a href="#"><?php echo $title ?></a></h2>
+                    <h2 class="page-links__title"><a href="<?php echo get_permalink($parent_id); ?>"><?php echo $title ?></a></h2>
                     <ul class="min-list">
                         <?php
                             echo wp_list_pages(array(

@@ -17,27 +17,23 @@
             <nav class="main-navigation">
                 <ul>
                     <li <?php
-                      if (is_page('about-us'))
-                          echo 'class="current-menu-item"';
-                      ?>
-                    ><a href="<?php echo site_url('/about-us') ?>">About Us</a></li>
+                        if ( is_page('about-us') || wp_get_post_parent_id(0) === get_page_by_path('about-us')->ID )
+                            echo 'class="current-menu-item"';
+                    ?>><a href="<?php echo site_url('/about-us') ?>">About Us</a></li>
                     <li <?php
-                      if (is_post_type_archive('program'))
-                          echo 'class="current-menu-item"';
-                      ?>
-                    ><a href="<?php echo get_post_type_archive_link('program')?>">Programs</a></li>
+                        if (get_post_type() == 'program')
+                            echo 'class="current-menu-item"';
+                    ?>><a href="<?php echo get_post_type_archive_link('program')?>">Programs</a></li>
                     <li <?php
-                      if (is_post_type_archive('event') || is_page('past-events') || is_singular('event'))
-                          echo 'class="current-menu-item"';
-                      ?>
-                    ><a href="<?php echo get_post_type_archive_link("event") ?>">Events</a>
+                        if (get_post_type() == 'event' || is_page('past-events'))
+                            echo 'class="current-menu-item"';
+                    ?>><a href="<?php echo get_post_type_archive_link("event") ?>">Events</a>
                     </li>
                     <li><a href="#">Campuses</a></li>
                     <li <?php
-                      if (is_home() || is_singular('post'))
-                          echo 'class="current-menu-item"';
-                      ?>
-                    ><a href="<?php echo site_url('/blog') ?>">Blog</a></li>
+                        if (get_post_type() == 'post')
+                            echo 'class="current-menu-item"';
+                    ?>><a href="<?php echo site_url('/blog') ?>">Blog</a></li>
                 </ul>
             </nav>
             <div class="site-header__util">
