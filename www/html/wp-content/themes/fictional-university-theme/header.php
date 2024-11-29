@@ -20,7 +20,7 @@
                     <li <?php applyCurrentMenuItemClass('Programs') ?>><a href="#">Programs</a></li>
                     <li <?php applyCurrentMenuItemClass('Events') ?>><a href="#">Events</a></li>
                     <li <?php applyCurrentMenuItemClass('Campuses') ?>><a href="#">Campuses</a></li>
-                    <li <?php applyCurrentMenuItemClass('Blog') ?>><a href="<?php echo site_url('/blog') ?>">Blog</a></li>
+                    <li <?php applyCurrentMenuItemClass('blog') ?>><a href="<?php echo site_url('/blog') ?>">Blog</a></li>
                 </ul>
 <!--                --><?php //wp_nav_menu(array('theme_location' => 'mainHeaderNavMenu')) ?>
             </nav>
