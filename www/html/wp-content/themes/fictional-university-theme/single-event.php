@@ -18,7 +18,7 @@
                 <p>
                     <a class="metabox__blog-home-link" href="<?php echo get_post_type_archive_link("event") ?>">
                         <i class="fa fa-home" aria-hidden="true"></i>
-                        <span>Events</span>
+                        <span>All events</span>
                     </a>
                     <span class="metabox__main"><?php the_title(); ?></span>
                 </p>

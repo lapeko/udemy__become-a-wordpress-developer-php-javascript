@@ -1,4 +1,6 @@
 <?php
+	require "helpers.php";
+
 	function load_site_theme_files() {
 		wp_enqueue_style( 'google-roboto-font', '//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i');
 		wp_enqueue_style( 'bootstrap-font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
@@ -17,21 +19,8 @@
 	}
 
 	function intercept_post_requests($query) {
-		if (is_admin() || !$query->is_main_query() || !is_post_type_archive('event'))
-			return;
-
-		$today = date('Ymd');
-		$query->set('meta_key', 'event_date');
-		$query->set('orderby', 'meta_value_num');
-		$query->set('order', 'ASC');
-		$query->set('meta_query', array(
-			array(
-				'key' => 'event_date',
-				'compare' => '>=',
-				'value' => $today,
-				'type' => 'numeric',
-			)
-		));
+		interceptEventsQuery($query);
+		interceptProgramsQuery($query);
 	}
 
 	add_action('wp_enqueue_scripts', 'load_site_theme_files');
