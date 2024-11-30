@@ -29,16 +29,12 @@
 
             <?php
                 $relPrograms = get_field('related_programs');
-                if (count($relPrograms) > 0) {
+                if ($relPrograms) {
             ?>
                 <hr class="section-break">
-                <h2>Related Program(s)</h2>
-
+                <h2 class="headline headline--medium">Related Program(s)</h2>
                 <ul class="link-list min-list">
-                    <?php
-
-                        foreach ($relPrograms as $relProgram) {
-                    ?>
+                    <?php foreach ($relPrograms as $relProgram) { ?>
                         <li><a href="<?php echo get_the_permalink($relProgram) ?>"><?php print_r(get_the_title($relProgram)); ?></a></li>
                     <?php } ?>
                 </ul>

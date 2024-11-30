@@ -47,14 +47,14 @@
                 )
             ));
             if (count($relatedEvents->posts)) {
-              echo '<hr class="section-break">';
-              echo '<h2 class="headline headline--medium">Upcoming ' . get_the_title() . ' Events</h2>';
+                echo '<hr class="section-break">';
+                echo '<h2 class="headline headline--medium">Upcoming ' . get_the_title() . ' Events</h2>';
             };
             while ( $relatedEvents->have_posts() ) : $relatedEvents->the_post();
         ?>
             <div class="event-summary">
                 <a class="event-summary__date t-center" href="<?php the_permalink(); ?>">
-                                        <?php $eventDate = new DateTime(get_field('event_date')) ?>
+                    <?php $eventDate = new DateTime(get_field('event_date')) ?>
                     <span class="event-summary__month"><?php echo $eventDate->format('M'); ?></span>
                     <span class="event-summary__day"><?php echo $eventDate->format('d'); ?></span>
                 </a>
@@ -65,6 +65,34 @@
             </div>
         <?php
             endwhile;
+            wp_reset_postdata();
+        ?>
+
+        <?php
+            $relatedProfessors = new WP_Query( array(
+                'posts_per_page' => -1,
+                'post_type' => 'professor',
+                'orderby' => 'title',
+                'order' => 'ASC',
+                'meta_query' => array(
+                    array(
+                        'key' => 'related_programs',
+                        'compare' => 'LIKE',
+                        'value' => '"' . get_the_ID() . '"',
+                    )
+                )
+            ));
+            if (count($relatedProfessors->posts)) {
+                echo '<hr class="section-break">';
+                echo '<h2 class="headline headline--medium">' . get_the_title() . ' Professor(s)</h2>';
+                echo '<ul>';
+            }
+            while ( $relatedProfessors->have_posts() ) : $relatedProfessors->the_post();
+        ?>
+            <p><a href="<?php the_permalink(); ?>"><?php the_title() ?></a></p>
+        <?php
+            endwhile;
+            if (count($relatedProfessors->posts)) echo '</ul>';
             wp_reset_postdata();
         ?>
     </div>
