@@ -1,5 +1,5 @@
 <?php
-	function registerEventPostType() {
+	function registerEventPos() {
 		register_post_type( 'event', array(
 			'rewrite' => array('slug' => 'events'),
 			'public' => true,
@@ -17,7 +17,7 @@
 		));
 	}
 
-	function registerProgramPostTypes() {
+	function registerProgramPost() {
 		register_post_type( 'program', array(
 			'rewrite' => array('slug' => 'programs'),
 			'public' => true,
@@ -35,7 +35,7 @@
 		));
 	}
 
-	function registerProfessorPostTypes() {
+	function registerProfessorPost() {
 		register_post_type( 'professor', array(
 			'public' => true,
 			'menu_icon' => 'dashicons-welcome-learn-more',
@@ -51,10 +51,29 @@
 		));
 	}
 
+	function registerCampusPost() {
+		register_post_type( 'campus', array(
+			'rewrite' => array('slug' => 'campuses'),
+			'public' => true,
+			'has_archive' => true,
+			'menu_icon' => 'dashicons-location-alt',
+			'show_in_rest' => true,
+			'supports' => array('title', 'editor'),
+			'labels' => array(
+				'name' => 'Campuses',
+				'add_new_item' => 'Add New Campus',
+				'edit_item' => 'Edit Campus',
+				'all_items' => 'All Campuses',
+				'singular_name' => 'Campus',
+			),
+		));
+	}
+
 	function register_post_types() {
-		registerEventPostType();
-		registerProgramPostTypes();
-		registerProfessorPostTypes();
+		registerEventPos();
+		registerProgramPost();
+		registerProfessorPost();
+		registerCampusPost();
 	}
 
 	add_action('init', 'register_post_types');

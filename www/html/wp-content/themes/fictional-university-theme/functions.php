@@ -26,6 +26,14 @@
 		interceptProgramsQuery($query);
 	}
 
+	function universityMapKey($api) {
+		echo '<div style="color: green; position: absolute; z-index: 100">Hi, Jack!' . getenv('GOOGLE_MAPS_API_KEY') . '</div>';
+		print_r(getenv('GOOGLE_MAPS_API_KEY'));
+		$api['key'] = getenv('GOOGLE_MAPS_API_KEY');
+		return $api;
+	}
+
 	add_action('wp_enqueue_scripts', 'load_site_theme_files');
 	add_action("after_setup_theme", 'site_theme_features');
 	add_action('pre_get_posts', 'intercept_post_requests');
+	add_filter('acf/fields/google_map/api', 'universityMapKey');
