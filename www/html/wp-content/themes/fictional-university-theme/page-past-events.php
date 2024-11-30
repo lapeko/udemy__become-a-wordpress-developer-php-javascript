@@ -1,11 +1,8 @@
 <?php get_header(); ?>
-
-	<div class="page-banner">
-		<div class="page-banner__bg-image" style="background-image: url(<?php echo get_theme_file_uri('/images/library-hero.jpg'); ?>)"></div>
-		<div class="page-banner__content container t-center c-white">
-			<h1 class="headline headline--large">Past events</h1>
-		</div>
-	</div>
+    <?php addBanner(array(
+        'background' => '/images/library-hero.jpg',
+        'title' => 'Past events',
+    )); ?>
 
 	<div class="container container--narrow page-section">
 		<?php
@@ -40,7 +37,7 @@
 				</div>
 		<?php
 			endwhile;
-      wp_reset_postdata();
+            wp_reset_postdata();
 			echo paginate_links();
 		?>
 	</div>

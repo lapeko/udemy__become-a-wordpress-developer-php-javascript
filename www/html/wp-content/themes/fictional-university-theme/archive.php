@@ -1,13 +1,11 @@
-<?php get_header(); ?>
-
-	<div class="page-banner">
-		<div class="page-banner__bg-image" style="background-image: url(<?php echo get_theme_file_uri('/images/library-hero.jpg'); ?>)"></div>
-		<div class="page-banner__content container t-center c-white">
-			<h1 class="headline headline--large"><?php echo get_the_archive_title() ?></h1>
-			<h2 class="headline headline--medium"><?php echo get_the_archive_description() ?></h2>
-		</div>
-	</div>
-
+<?php
+  get_header();
+  addBanner(array(
+    'background' => '/images/library-hero.jpg',
+    'title' => get_the_archive_title(),
+    'subtitle' => get_the_archive_description()
+  ));
+?>
 	<div class="container container--narrow page-section">
 		<?php while(have_posts()) {
 			the_post();
