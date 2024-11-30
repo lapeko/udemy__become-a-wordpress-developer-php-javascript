@@ -82,17 +82,22 @@
                     )
                 )
             ));
-            if (count($relatedProfessors->posts)) {
+            if ($relatedProfessors->have_posts()) {
                 echo '<hr class="section-break">';
                 echo '<h2 class="headline headline--medium">' . get_the_title() . ' Professor(s)</h2>';
-                echo '<ul>';
+                echo '<ul class="professor-cards">';
             }
-            while ( $relatedProfessors->have_posts() ) : $relatedProfessors->the_post();
+            while ($relatedProfessors->have_posts()) : $relatedProfessors->the_post();
         ?>
-            <p><a href="<?php the_permalink(); ?>"><?php the_title() ?></a></p>
+            <li class="professor-card__list-item">
+                <a class="professor-card" href="<?php the_permalink(); ?>">
+                    <img class="professor-card__image" src="<?php the_post_thumbnail_url(); ?>">
+                    <span class="professor-card__name"><?php the_title() ?></span>
+                </a>
+            </li>
         <?php
             endwhile;
-            if (count($relatedProfessors->posts)) echo '</ul>';
+            if ($relatedProfessors->have_posts()) echo '</ul>';
             wp_reset_postdata();
         ?>
     </div>

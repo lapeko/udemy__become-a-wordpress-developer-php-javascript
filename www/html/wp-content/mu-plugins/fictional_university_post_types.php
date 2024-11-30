@@ -40,7 +40,7 @@
 			'public' => true,
 			'menu_icon' => 'dashicons-welcome-learn-more',
 			'show_in_rest' => true,
-			'supports' => array('title', 'editor'),
+			'supports' => array('title', 'editor', 'thumbnail'),
 			'labels' => array(
 				'name' => 'Professors',
 				'add_new_item' => 'Add New Professor',
