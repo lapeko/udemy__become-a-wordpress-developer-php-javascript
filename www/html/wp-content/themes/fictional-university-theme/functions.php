@@ -6,6 +6,7 @@
 		wp_enqueue_style( 'bootstrap-font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 		wp_enqueue_style( 'index-styles', get_theme_file_uri( '/build/index.css' ));
 		wp_enqueue_style( 'style-index-styles', get_theme_file_uri( '/build/style-index.css' ));
+		wp_enqueue_script( 'google-maps-api-scripts', '//maps.googleapis.com/maps/api/js?key=' . getenv('GOOGLE_MAPS_API_KEY'), array('jquery'), '1.0', true );
 		wp_enqueue_script( 'js-scripts', get_theme_file_uri( '/build/index.js'), array('jquery'), '1.0', true );
 	}
 
@@ -27,8 +28,6 @@
 	}
 
 	function universityMapKey($api) {
-		echo '<div style="color: green; position: absolute; z-index: 100">Hi, Jack!' . getenv('GOOGLE_MAPS_API_KEY') . '</div>';
-		print_r(getenv('GOOGLE_MAPS_API_KEY'));
 		$api['key'] = getenv('GOOGLE_MAPS_API_KEY');
 		return $api;
 	}
