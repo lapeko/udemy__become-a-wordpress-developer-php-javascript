@@ -29,8 +29,12 @@ const hideSpinner = () => {
 }
 
 const requestData = (searchValue) => {
-    console.log('requesting...', searchValue);
-    hideSpinner()
+    fetch(`http://localhost:8080/wp-json/wp/v2/posts?search=${searchValue}`)
+        .then(res => res.json())
+        .then(arr => arr?.map(post => post?.title?.rendered))
+        .then(console.log)
+        .catch(console.error)
+        .finally(hideSpinner);
 };
 
 const inputChangeHandler = ($event) => {
