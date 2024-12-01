@@ -25,6 +25,13 @@
 		$query->set('order', 'ASC');
 	}
 
+    function interceptCampusesQuery($query) {
+	    if (is_admin() || !$query->is_main_query() || !is_post_type_archive('campus'))
+		    return;
+
+        $query->set('posts_per_page', '-1');
+    }
+
 	function addBanner($arr = NULL) {
 		$background = $arr['background']
 			? get_theme_file_uri($arr['background'])

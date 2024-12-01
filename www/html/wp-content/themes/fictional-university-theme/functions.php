@@ -25,6 +25,7 @@
 	function intercept_post_requests($query) {
 		interceptEventsQuery($query);
 		interceptProgramsQuery($query);
+		interceptCampusesQuery($query);
 	}
 
 	function universityMapKey($api) {
