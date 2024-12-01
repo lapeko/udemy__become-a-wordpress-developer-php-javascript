@@ -73,6 +73,9 @@
             <i class="fa fa-window-close search-overlay__close"></i>
         </div>
     </div>
+    <div class="container">
+        <div class="spinner-loader"></div>
+    </div>
 </div>
 <?php wp_footer() ?>
 </body>

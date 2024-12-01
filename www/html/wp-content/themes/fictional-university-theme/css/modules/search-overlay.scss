@@ -31,6 +31,14 @@
     top: 32px;
   }
 
+  .spinner-loader {
+    visibility: hidden;
+
+    &.active {
+      visibility: visible;
+    }
+  }
+
   &__top {
     background-color: rgba(0, 0, 0, 0.12);
   }
