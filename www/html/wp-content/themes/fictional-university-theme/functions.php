@@ -1,5 +1,6 @@
 <?php
-	require "helpers.php";
+	require "includes/helpers.php";
+	require "includes/search-route.php";
 
 	function load_site_theme_files() {
 		wp_enqueue_style( 'google-roboto-font', '//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i');
@@ -50,4 +51,5 @@
 	add_action("after_setup_theme", 'site_theme_features');
 	add_action('pre_get_posts', 'intercept_post_requests');
 	add_action('rest_api_init', 'university_custom_rest');
+	add_action('rest_api_init', 'university_search_route');
 	add_filter('acf/fields/google_map/api', 'university_map_key');
