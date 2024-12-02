@@ -7,5 +7,19 @@
 	}
 
 	function university_search_results() {
-		return 'Congratulations! You created a route.';
+		$professors = new WP_Query(array(
+			'post_type' => 'professor',
+		));
+
+		$response = array();
+
+		while ($professors->have_posts()) {
+			$professors->the_post();
+			$response[] = array(
+				'title'     => get_the_title(),
+				'permalink' => get_the_permalink(),
+			);
+		}
+
+		return $response;
 	}
