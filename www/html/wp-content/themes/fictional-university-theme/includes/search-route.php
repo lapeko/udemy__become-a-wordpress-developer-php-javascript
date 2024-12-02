@@ -28,25 +28,22 @@
 
 			switch ($postType) {
 				case 'post':
-				case 'page':
-						array_push($response['generalInfo'], fillPostInfo()); break;
-				case 'professor':
-						array_push($response['professors'], fillPostInfo()); break;
-				case 'program':
-					array_push($response['programs'], fillPostInfo()); break;
-				case 'events':
-					array_push($response['events'], fillPostInfo()); break;
-				case 'campus':
-					array_push($response['campuses'], fillPostInfo()); break;
+				case 'page': $response = fillPostInfo($response, 'generalInfo'); break;
+				case 'professor': $response = fillPostInfo($response, 'professors'); break;
+				case 'program': $response = fillPostInfo($response, 'programs'); break;
+				case 'event': $response = fillPostInfo($response, 'events'); break;
+				case 'campus': $response = fillPostInfo($response, 'campuses'); break;
 			}
 		}
 
 		return $response;
 	}
 
-	function fillPostInfo() {
-		return array(
+	function fillPostInfo($array, $key) {
+		$array[$key][] = array(
 			'title'     => get_the_title(),
 			'permalink' => get_the_permalink(),
+			'author'    => get_the_author(),
 		);
+		return $array;
 	}

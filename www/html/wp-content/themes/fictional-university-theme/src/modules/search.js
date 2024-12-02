@@ -1,4 +1,4 @@
-addOverlayIntoDom();
+renderSearchOverlay();
 
 const openSearchBtn = document.querySelector('.search-trigger.js-search-trigger');
 const closeSearchBtn = document.querySelector('.search-overlay__close');
@@ -19,20 +19,35 @@ let spinnerShown = false;
 
 let timeoutId;
 
-showSearchResults = (items, err) => {
-    searchOverlayContent.innerHTML = '<h2 class="search-overlay__section-title">General information</h2>';
+const renderSearchResults = (response, err) => {
     if (err) {
         console.error(err);
         searchOverlayContent.insertAdjacentHTML('beforeend', '<p>An error occurred. PLease try later.</p>');
         return;
     }
-    if (!items?.length) {
-        searchOverlayContent.insertAdjacentHTML('beforeend', '<p>No general information matches that search.</p>');
-        return;
-    }
-    searchOverlayContent.insertAdjacentHTML('beforeend', `<ul class="link-list min-list">
-        ${items.map(i => `<li><a href="${i.link}">${i.title.rendered}</a> ${i.authorName ? ` by ${i.authorName}` : ''}</li>`).join('')}
-    </ul>`)
+    searchOverlayContent.insertAdjacentHTML('beforeend', `<div class="row">
+        <div class="row">
+            <div class="one-third">
+                <h2 class="search-overlay__section-title">General info</h2>
+                ${renderItemsByKey(response, 'generalInfo')}
+            </div>
+            <div class="one-third">
+                <h2 class="search-overlay__section-title">Programs</h2>
+                ${renderItemsByKey(response, 'programs')}
+                <h2 class="search-overlay__section-title">Professors</h2>
+                ${renderItemsByKey(response, 'professors')}            
+            </div>
+            <div class="one-third">
+                <h2 class="search-overlay__section-title">Campuses</h2>
+                ${renderItemsByKey(response, 'campuses')}
+                <h2 class="search-overlay__section-title">Events</h2>
+                ${renderItemsByKey(response, 'events')}            
+            </div>        
+        </div>
+    </div>`)
+    // searchOverlayContent.insertAdjacentHTML('beforeend', `<ul class="link-list min-list">
+    //     ${items.map(i => `<li><a href="${i.link}">${i.title.rendered}</a> ${i.authorName ? ` by ${i.authorName}` : ''}</li>`).join('')}
+    // </ul>`)
 }
 
 const showSpinner = () => {
@@ -48,13 +63,10 @@ const hideSpinner = () => {
 }
 
 const requestData = (searchValue) => {
-    Promise.all([
-        fetch(`http://localhost:8080/wp-json/wp/v2/posts?search=${searchValue}`).then(res => res.json()),
-        fetch(`http://localhost:8080/wp-json/wp/v2/event?search=${searchValue}`).then(res => res.json()),
-    ])
-        .then(([json1, json2]) => [...json1, ...json2])
-        .then(res => showSearchResults(res, null))
-        .catch(err => showSearchResults(null, err))
+    fetch(`http://localhost:8080/wp-json/university/v1/search?term=${searchValue}&page=1&limit=-1`)
+        .then(res => res.json())
+        .then(res => renderSearchResults(res, null))
+        .catch(err => renderSearchResults(null, err))
         .finally(hideSpinner);
 };
 
@@ -68,7 +80,7 @@ const inputChangeHandler = ($event) => {
 
     showSpinner();
     searchOverlayContent.innerHTML = '';
-    timeoutId = setTimeout(requestData, 2000, value);
+    timeoutId = setTimeout(requestData, 100, value);
 }
 
 const openOverlay = () => {
@@ -102,7 +114,7 @@ document.addEventListener('keydown', e => {
     }
 });
 
-function addOverlayIntoDom() {
+function renderSearchOverlay() {
     const overlayDiv = document.createElement('div');
     overlayDiv.className = 'search-overlay';
     overlayDiv.innerHTML = `<div class="search-overlay__top">
@@ -123,3 +135,9 @@ function addOverlayIntoDom() {
     </div>`;
     document.body.appendChild(overlayDiv);
 }
+
+const renderItemsByKey = (response, key) => response[key].length
+    ?   `<ul class="link-list min-list">
+            ${response[key].map(i => `<li><a href="${i.permalink}">${i.title}</a> ${i.author ? ` by ${i.author}` : ''}</li>`).join('')}
+        </ul>`
+    :   '<p>No general information matches that search.</p>';
