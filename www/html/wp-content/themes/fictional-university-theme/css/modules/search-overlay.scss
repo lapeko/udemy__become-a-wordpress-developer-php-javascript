@@ -32,10 +32,10 @@
   }
 
   .spinner-loader {
-    visibility: hidden;
+    display: none;
 
     &.active {
-      visibility: visible;
+      display: block;
     }
   }
 

@@ -28,7 +28,20 @@
 		interceptCampusesQuery($query);
 	}
 
-	function universityMapKey($api) {
+	function university_custom_rest($query) {
+		register_rest_field('post', 'authorName', array(
+			'get_callback' => function() {
+				return get_the_author();
+			},
+		));
+		register_rest_field('event', 'authorName', array(
+			'get_callback' => function() {
+				return get_the_author();
+			},
+		));
+	}
+
+	function university_map_key($api) {
 		$api['key'] = getenv('GOOGLE_MAPS_API_KEY');
 		return $api;
 	}
@@ -36,4 +49,5 @@
 	add_action('wp_enqueue_scripts', 'load_site_theme_files');
 	add_action("after_setup_theme", 'site_theme_features');
 	add_action('pre_get_posts', 'intercept_post_requests');
-	add_filter('acf/fields/google_map/api', 'universityMapKey');
+	add_action('rest_api_init', 'university_custom_rest');
+	add_filter('acf/fields/google_map/api', 'university_map_key');
