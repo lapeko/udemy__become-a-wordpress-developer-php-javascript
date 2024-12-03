@@ -15,7 +15,7 @@
             </p>
         </div>
 
-        <div class="generic-content"><?php the_content(); ?></div>
+        <div class="generic-content"><?php the_field('program_main_content'); ?></div>
 
         <?php
 	        $today = date('Ymd');

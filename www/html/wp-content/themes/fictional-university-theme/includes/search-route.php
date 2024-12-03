@@ -55,23 +55,25 @@
 				$item['day'] = $eventDate->format('d');
 				$item['content'] = has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 18);
 				break;
-			case 'programs': $array['professors'] = array_unique(array_merge($array['professors'], getRelatedProfessors()));
+			case 'programs':
+				$array['professors'] = array_merge($array['professors'], getRelatedProfessors(get_the_ID()));
 				break;
 		}
 
 		$array[$key][] = $item;
+		$array['professors'] = array_unique($array['professors'], SORT_REGULAR);
 
 		return $array;
 	}
 
-	function getRelatedProfessors(): array {
+	function getRelatedProfessors($professorId): array {
 		$professorsQuery = new WP_Query(array(
 			'post_type' => 'professor',
 			'meta_query' => array(
 				array(
 					'key' => 'related_programs',
 					'compare' => 'LIKE',
-					'value' => 51,
+					'value' => $professorId,
 				)
 			),
 		));

@@ -24,7 +24,7 @@
 			'has_archive' => true,
 			'menu_icon' => 'dashicons-awards',
 			'show_in_rest' => true,
-			'supports' => array('title', 'editor'),
+			'supports' => array('title'),
 			'labels' => array(
 				'name' => 'Programs',
 				'add_new_item' => 'Add New Program',
