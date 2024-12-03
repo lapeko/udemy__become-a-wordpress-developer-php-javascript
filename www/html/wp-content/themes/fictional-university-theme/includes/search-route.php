@@ -6,7 +6,7 @@
 		));
 	}
 
-	function university_search_results($data) {
+	function university_search_results($data): array {
 		$professors = new WP_Query(array(
 			'post_type' => array('post', 'page', 'professor', 'program', 'campus', 'event'),
 			's' => sanitize_text_field($data['term']),
@@ -40,10 +40,48 @@
 	}
 
 	function fillPostInfo($array, $key) {
-		$array[$key][] = array(
+		$item = array(
 			'title'     => get_the_title(),
 			'permalink' => get_the_permalink(),
-			'author'    => get_the_author(),
 		);
+
+		switch ($key) {
+			case 'generalInfo': $item['author'] = get_the_author(); break;
+			case 'professors':
+				$item['thumbnail'] = get_the_post_thumbnail_url(0, 'professorLandscape'); break;
+			case 'events':
+				$eventDate = new DateTime(get_field('event_date'));
+				$item['month'] = $eventDate->format('M');
+				$item['day'] = $eventDate->format('d');
+				$item['content'] = has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 18);
+				break;
+			case 'programs': $array['professors'] = array_unique(array_merge($array['professors'], getRelatedProfessors()));
+				break;
+		}
+
+		$array[$key][] = $item;
+
 		return $array;
+	}
+
+	function getRelatedProfessors(): array {
+		$professorsQuery = new WP_Query(array(
+			'post_type' => 'professor',
+			'meta_query' => array(
+				array(
+					'key' => 'related_programs',
+					'compare' => 'LIKE',
+					'value' => 51,
+				)
+			),
+		));
+		$professors = array();
+		while ($professorsQuery->have_posts()): $professorsQuery->the_post();
+			$professors[] = array(
+				'title'     => get_the_title(),
+				'permalink' => get_the_permalink(),
+				'thumbnail' => get_the_post_thumbnail_url( 0, 'professorLandscape' ),
+			);
+		endwhile;
+		return $professors;
 	}

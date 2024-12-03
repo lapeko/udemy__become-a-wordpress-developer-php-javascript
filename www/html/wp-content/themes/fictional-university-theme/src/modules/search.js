@@ -29,7 +29,7 @@ const renderSearchResults = (response, err) => {
         <div class="row">
             <div class="one-third">
                 <h2 class="search-overlay__section-title">General info</h2>
-                ${renderItemsByKey(response, 'generalInfo')}
+                ${renderItemsByKey(response, 'generalInfo', 'general info')}
             </div>
             <div class="one-third">
                 <h2 class="search-overlay__section-title">Programs</h2>
@@ -45,9 +45,6 @@ const renderSearchResults = (response, err) => {
             </div>        
         </div>
     </div>`)
-    // searchOverlayContent.insertAdjacentHTML('beforeend', `<ul class="link-list min-list">
-    //     ${items.map(i => `<li><a href="${i.link}">${i.title.rendered}</a> ${i.authorName ? ` by ${i.authorName}` : ''}</li>`).join('')}
-    // </ul>`)
 }
 
 const showSpinner = () => {
@@ -136,8 +133,39 @@ function renderSearchOverlay() {
     document.body.appendChild(overlayDiv);
 }
 
-const renderItemsByKey = (response, key) => response[key].length
-    ?   `<ul class="link-list min-list">
-            ${response[key].map(i => `<li><a href="${i.permalink}">${i.title}</a> ${i.author ? ` by ${i.author}` : ''}</li>`).join('')}
-        </ul>`
-    :   '<p>No general information matches that search.</p>';
+const renderItemsByKey = (response, key, shortDescription) => {
+    let ulClasses = '';
+    if (key === 'professors') ulClasses = 'professor-cards';
+    else if (key !== 'events') ulClasses = 'link-list min-list';
+    return response[key].length
+        ?   `<ul class="${ulClasses}">
+                ${response[key].map(renderItem(key)).join('')}
+            </ul>`
+        :   `<p>No ${shortDescription ?? key} matche(s) that search.</p>`;
+}
+
+const renderItem = (key) => {
+    switch (key) {
+        case 'professors': return i => `<li class="professor-card__list-item">
+                <a class="professor-card" href="${i.permalink}" >
+                    <img class="professor-card__image" src="${i.thumbnail}" alt="${i.title}" >
+                    <span class="professor-card__name">${i.title}</span>        
+                </a>
+            </li>`;
+        case 'events': return i => `<div class="event-summary">
+                <a class="event-summary__date t-center" href="${i.permalink}">
+                    <span class="event-summary__month">${i.month}</span>
+                    <span class="event-summary__day">${i.day}</span>
+                </a>
+                <div class="event-summary__content">
+                    <h5 class="event-summary__title headline headline--tiny"><a
+                        href="${i.permalink}">${i.title}</a></h5>
+                    <p>
+                        ${i.content}
+                        <a href="${i.permalink}" class="nu gray">Learn more</a>
+                    </p>
+                </div>
+            </div>`;
+        default: return i => `<li><a href="${i.permalink}">${i.title}</a> ${i.author ? ` by ${i.author}` : ''}</li>`;
+    }
+};
