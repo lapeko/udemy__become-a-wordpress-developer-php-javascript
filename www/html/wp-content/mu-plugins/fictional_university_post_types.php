@@ -1,6 +1,8 @@
 <?php
 	function registerEventPos() {
 		register_post_type( 'event', array(
+			'capability_type' => 'event',
+			'add_meta_cap' => true,
 			'rewrite' => array('slug' => 'events'),
 			'public' => true,
 			'has_archive' => true,
@@ -53,6 +55,8 @@
 
 	function registerCampusPost() {
 		register_post_type( 'campus', array(
+			'capability_type' => 'campus',
+			'add_meta_cap' => true,
 			'rewrite' => array('slug' => 'campuses'),
 			'public' => true,
 			'has_archive' => true,
